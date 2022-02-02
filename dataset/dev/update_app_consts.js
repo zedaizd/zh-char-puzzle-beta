@@ -36,12 +36,20 @@ try {
   console.log(e)
 }
 
-let validChars = 
+let validSolutions = 
   Object.keys(charToComponents)
   // Filtering out characters that have too few components. They are very hard to guess
   .filter(key => {
     let attempts = charToComponents[key]
     return attempts.length === 1 && attempts[0].length >= minComponents
+  })
+
+let validGuesses =
+  Object.keys(charToComponents)
+  // Filtering out characters that have too few components. They are very hard to guess
+  .filter(key => {
+    let attempts = charToComponents[key]
+    return attempts.some(attempt => attempt.length < minComponents)
   })
 
 let wordContent = `
@@ -52,12 +60,12 @@ let charToSymbolContent = `
 export const CHAR_TO_SYMBOLS: number[][] = [
 `
 
-while (validChars.length !== 0) {
-  let chars = validChars.splice(0, 10)
+while (validSolutions.length !== 0) {
+  let chars = validSolutions.splice(0, 10)
 
   wordContent += '  \'' + chars.join('\', \'') + '\''
 
-  if (validChars.length !== 0)
+  if (validSolutions.length !== 0)
     wordContent += ','
 
   wordContent += '\n'
@@ -88,6 +96,31 @@ try {
     pathConsts.CHARACTER_TO_SYMBOLS,
     charToSymbolContent)
   
+} catch (e) {
+  console.log(e)
+}
+
+let guessContent = `
+export const VALIDGUESSES: string[] = [
+`
+while (validGuesses.length !== 0) {
+  let chars = validGuesses.splice(0, 10)
+
+  guessContent += '  \'' + chars.join('\', \'') + '\''
+
+  if (validGuesses.length !== 0)
+    guessContent += ','
+
+  guessContent += '\n'
+  
+}
+
+guessContent += ']'
+
+try {
+  fs.writeFileSync(
+    pathConsts.VALID_GUESS_PATH,
+    guessContent)
 } catch (e) {
   console.log(e)
 }

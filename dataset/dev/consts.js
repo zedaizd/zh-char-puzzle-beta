@@ -22,6 +22,7 @@ const pathConsts = {
   FREQUENTLY_USED_PATH: path.resolve(folderNames.DATASET, folderNames.FREQUENTLY_USED),
 
   WORD_LIST_PATH: path.resolve(folderNames.SRC, folderNames.CONSTS, 'wordlist.ts'),
+  VALID_GUESS_PATH: path.resolve(folderNames.SRC, folderNames.CONSTS, 'validGuesses.ts'),
   CHARACTER_TO_SYMBOLS: path.resolve(folderNames.SRC, folderNames.CONSTS, 'charToGroups.ts'),
 }
 
