@@ -25,6 +25,7 @@ import {
   getCharSymbols,
   solution,
   solutionSymbols,
+  possibleSymbols,
 } from './lib/words'
 import { addStatsForCompletedGame, loadStats } from './lib/stats'
 import {
@@ -33,6 +34,7 @@ import {
 } from './lib/localStorage'
 
 import './App.css'
+import { SymbolDisplay } from './components/grid/SymbolDisplay'
 
 const ALERT_TIME_MS = 2000
 
@@ -196,6 +198,11 @@ function App() {
       />
       <div>
         <InputCell value={currentGuess} onChar={onChar} onEnter={onEnter} />
+        <div>
+          {possibleSymbols.map((s) => (
+            <SymbolDisplay symbol={s} />
+          ))}
+        </div>
       </div>
       {/* <Keyboard
         onChar={onChar}
