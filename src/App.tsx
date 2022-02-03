@@ -71,6 +71,8 @@ function App() {
     if (loaded.guesses.length === 6 && !gameWasWon) {
       setIsGameLost(true)
     }
+    setValidSymbolGuesses(loaded.validSymbolGuesses)
+    SetValidSymbols(loaded.validSymbols)
     return loaded.guesses
   })
 
@@ -90,8 +92,13 @@ function App() {
   }
 
   useEffect(() => {
-    saveGameStateToLocalStorage({ guesses, solution })
-  }, [guesses])
+    saveGameStateToLocalStorage({
+      guesses,
+      solution,
+      validSymbolGuesses,
+      validSymbols,
+    })
+  }, [guesses, validSymbols, validSymbolGuesses])
 
   useEffect(() => {
     if (isGameWon) {
@@ -182,7 +189,11 @@ function App() {
         />
       </div>
 
-      <Grid guesses={guesses} currentGuess={''} />
+      <Grid
+        guesses={guesses}
+        validGuessedSymbols={validSymbolGuesses}
+        currentGuess={''}
+      />
       <div className="flex justify-center mb-1">
         <InputCell value={currentGuess} onChar={onChar} onEnter={onEnter} />
         <p>{validSymbols.join(', ')}</p>

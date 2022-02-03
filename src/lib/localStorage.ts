@@ -1,7 +1,9 @@
 const gameStateKey = 'gameState'
 
 type StoredGameState = {
-  guesses: string[]
+  guesses: string[],
+  validSymbolGuesses: number[][],
+  validSymbols: number[],
   solution: string
 }
 

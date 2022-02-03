@@ -4,13 +4,13 @@ import { Cell } from './Cell'
 import { SymbolDisplay } from './SymbolDisplay'
 
 type Props = {
-  guess: string
+  guess: string,
+  validSymbols: number[]
 }
 
-export const CompletedRow = ({ guess }: Props) => {
+export const CompletedRow = ({ guess, validSymbols }: Props) => {
   const statuses = getGuessStatuses(guess)
-  let symbols = getCharSymbols(guess)
-  symbols = symbols.filter((v, i) => symbols.indexOf(v) === i)
+  const symbols = validSymbols.filter((v, i) => validSymbols.indexOf(v) === i)
 
   return (
     <div className="flex justify-center mb-1">
