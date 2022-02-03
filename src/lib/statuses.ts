@@ -57,6 +57,18 @@ export const getStatuses = (
   return charObj
 }
 
+export const getSymbolStatus = (
+  usedSymbols: number[],
+  validSymbols: number[],
+  symbolInQuestion: number): CharStatus | undefined => {
+
+  return usedSymbols.includes(symbolInQuestion)
+    ? validSymbols.includes(symbolInQuestion)
+      ? 'correct'
+      : 'absent'
+    : undefined
+}
+
 export const getGuessStatuses = (guess: string): CharStatus[] => {
   const splitSolution = solution.split('')
   const splitGuess = guess.split('')

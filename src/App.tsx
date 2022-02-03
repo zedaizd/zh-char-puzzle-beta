@@ -35,6 +35,7 @@ import {
 
 import './App.css'
 import { SymbolDisplay } from './components/grid/SymbolDisplay'
+import { HintPanel } from './components/keyboard/HintPanel'
 
 const ALERT_TIME_MS = 2000
 
@@ -191,18 +192,14 @@ function App() {
         />
       </div>
 
-      <Grid
+      <Grid guesses={guesses} solutionSymbols={solutionSymbols} />
+      <HintPanel
+        solution={solution}
         guesses={guesses}
-        validGuessedSymbols={validSymbolGuesses}
-        currentGuess={''}
+        possibleSymbols={possibleSymbols}
       />
       <div>
         <InputCell value={currentGuess} onChar={onChar} onEnter={onEnter} />
-        <div>
-          {possibleSymbols.map((s) => (
-            <SymbolDisplay symbol={s} />
-          ))}
-        </div>
       </div>
       {/* <Keyboard
         onChar={onChar}
