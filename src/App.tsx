@@ -116,10 +116,6 @@ function App() {
     }
   }
 
-  const onDelete = () => {
-    setCurrentGuess(currentGuess.slice(0, -1))
-  }
-
   const onEnter = () => {
     if (isGameWon || isGameLost) {
       return

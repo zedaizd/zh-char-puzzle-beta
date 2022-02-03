@@ -1,4 +1,3 @@
-const { constants } = require('crypto')
 const path = require('path')
 
 const folderNames = {
@@ -11,8 +10,8 @@ const folderNames = {
 }
 
 const fileNames = {
-  CHARACTER_TO_COMPONENTS: 'char2components.yml',
-  COMPONENT_TO_COMPONENT_SYMBOL: 'component2group.yml',
+  CHARACTER_TO_PARTS: 'char2components.yml',
+  PART_TO_SYMBOL: 'component2group.yml',
   GROUP_TO_REPRESENTATIVE: 'group2representative.yml',
   CHARACTER_LIST: 'char-list.yml'
 }
@@ -24,6 +23,8 @@ const pathConsts = {
   WORD_LIST_PATH: path.resolve(folderNames.SRC, folderNames.CONSTS, 'wordlist.ts'),
   VALID_GUESS_PATH: path.resolve(folderNames.SRC, folderNames.CONSTS, 'validGuesses.ts'),
   CHARACTER_TO_SYMBOLS: path.resolve(folderNames.SRC, folderNames.CONSTS, 'charToGroups.ts'),
+  SYMBOL_TO_PARTS: path.resolve(folderNames.SRC, folderNames.CONSTS, 'symbolToParts.ts'),
+  SYMBOL_TO_REPRESENTATIVE: path.resolve(folderNames.SRC, folderNames.CONSTS, 'symbolToRepresentative.ts'),
 }
 
 module.exports.fileNames = fileNames

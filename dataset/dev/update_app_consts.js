@@ -15,20 +15,21 @@ const minComponents = 3
 //     - The inner array is a set of valid component groups.
 //     - The outer most array enumerates the collection of disassembles of each character.
 //   - It is an array rather than dictionary to save spaces
-// 3. a mapping from component group id to component image ID
+// 3. a mapping from component symbol id to parts
+// 4. a mapping from component symbol id to representative part id
 
 let charToComponents, componentToSymbol
 try {
   charToComponents = yaml.load(
     fs.readFileSync(
-      path.resolve(pathConsts.FREQUENTLY_USED_PATH, fileNames.CHARACTER_TO_COMPONENTS),
+      path.resolve(pathConsts.FREQUENTLY_USED_PATH, fileNames.CHARACTER_TO_PARTS),
       'utf8'
     )
   )
 
   componentToSymbol = yaml.load(
     fs.readFileSync(
-      path.resolve(pathConsts.FULL_DATASET_PATH, fileNames.COMPONENT_TO_COMPONENT_SYMBOL),
+      path.resolve(pathConsts.FULL_DATASET_PATH, fileNames.PART_TO_SYMBOL),
       'utf8'
     )
   )
@@ -100,6 +101,7 @@ try {
   console.log(e)
 }
 
+// Updates the mapping from character to symbols
 let guessContent = `
 export const VALIDGUESSES: string[] = [
 `
@@ -121,6 +123,66 @@ try {
   fs.writeFileSync(
     pathConsts.VALID_GUESS_PATH,
     guessContent)
+} catch (e) {
+  console.log(e)
+}
+
+// Updates the mapping from symbol to components
+
+let partToSymbol
+let symbolToRepresentative
+try {
+  partToSymbol = yaml.load(
+    fs.readFileSync(
+      path.resolve(pathConsts.FULL_DATASET_PATH, fileNames.PART_TO_SYMBOL),
+      'utf8'
+    )
+  )
+
+  symbolToRepresentative = yaml.load(
+    fs.readFileSync(
+      path.resolve(pathConsts.FULL_DATASET_PATH, fileNames.GROUP_TO_REPRESENTATIVE),
+      'utf8'
+    )
+  )
+} catch (e) {
+  console.log(e)
+}
+
+const symbolToParts =
+  Object.keys(partToSymbol)
+  .reduce(
+    (prev, current) => {
+      let symbol = partToSymbol[current]
+      
+      if (symbol in prev) {
+        prev[symbol].push(Number(current))
+      }
+      else {
+        prev[symbol] = [Number(current)]
+      }
+
+      return prev
+    },
+    {}
+  )
+
+let symbolToPartsContent = `
+export const SYMBOL_TO_PARTS: { [key: number]: number[] } = ${JSON.stringify(symbolToParts)}
+`
+
+let symbolToRepresentativeContent = `
+export const SYMBOL_TO_REPRESENTATIVE: { [key: number]: number } = ${JSON.stringify(symbolToRepresentative)}
+`
+
+try {
+  fs.writeFileSync(
+    pathConsts.SYMBOL_TO_PARTS,
+    symbolToPartsContent)
+
+  fs.writeFileSync(
+    pathConsts.SYMBOL_TO_REPRESENTATIVE,
+    symbolToRepresentativeContent)
 } catch (e) {
   console.log(e)
 }
