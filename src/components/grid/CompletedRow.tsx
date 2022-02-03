@@ -13,7 +13,7 @@ export const CompletedRow = ({ guess, validSymbols }: Props) => {
   const symbols = validSymbols.filter((v, i) => validSymbols.indexOf(v) === i)
 
   return (
-    <div className="flex justify-center mb-1">
+    <div className="mb-1 items-center">
       <Cell value={guess} status={statuses[0]} />
       {symbols.map((symbol, i) => (
         <SymbolDisplay key={i} symbol={symbol} />

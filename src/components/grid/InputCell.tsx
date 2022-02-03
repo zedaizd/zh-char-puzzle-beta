@@ -25,8 +25,11 @@ export const InputCell = ({ onChar, onEnter, value }: Props) => {
     }
   )
 
-  return <div className={classes}>
-          <input type="text" onChange={handleChange} value={value} placeholder='請輸入一個字...'/>
-          <button onClick={handleClick}>確認</button>
+  const buttonClassName = 
+    'w-14 h-14 border-solid border-2 flex items-center justify-center mx-0.5 text-lg font-bold rounded dark:text-white bg-slate-200 dark:bg-slate-600 hover:bg-slate-300 active:bg-slate-400'
+
+  return <div className="flex justify-center mb-1">
+          <input className={classes} type="text" onChange={handleChange} value={value} placeholder='猜一字'/>
+          <button className={buttonClassName} onClick={handleClick}>確認</button>
         </div>
 }

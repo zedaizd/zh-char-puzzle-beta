@@ -194,9 +194,8 @@ function App() {
         validGuessedSymbols={validSymbolGuesses}
         currentGuess={''}
       />
-      <div className="flex justify-center mb-1">
+      <div>
         <InputCell value={currentGuess} onChar={onChar} onEnter={onEnter} />
-        <p>{validSymbols.join(', ')}</p>
       </div>
       {/* <Keyboard
         onChar={onChar}
