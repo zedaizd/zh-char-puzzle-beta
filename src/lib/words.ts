@@ -40,7 +40,7 @@ Object.keys(charToSymbols)
   })
 })
 
-const getRandomRange = <T>(rng: prng, start: number, range: number) => {
+const getRandomRange = (rng: prng, start: number, range: number) => {
   return Math.abs(rng.int32() % range) + start
 }
 

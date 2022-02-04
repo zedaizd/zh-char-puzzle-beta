@@ -1,6 +1,5 @@
 import { ReactNode } from 'react'
 import classnames from 'classnames'
-import { KeyValue } from '../../lib/keyboard'
 import { CharStatus } from '../../lib/statuses'
 import { SymbolDisplay } from '../grid/SymbolDisplay'
 

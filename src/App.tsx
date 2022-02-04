@@ -34,7 +34,6 @@ import {
 } from './lib/localStorage'
 
 import './App.css'
-import { SymbolDisplay } from './components/grid/SymbolDisplay'
 import { HintPanel } from './components/keyboard/HintPanel'
 
 const ALERT_TIME_MS = 2000

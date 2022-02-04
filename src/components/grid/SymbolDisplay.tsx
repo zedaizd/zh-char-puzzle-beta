@@ -1,4 +1,3 @@
-import { SYMBOL_TO_PARTS } from '../../constants/symbolToParts'
 import { SYMBOL_TO_REPRESENTATIVE } from '../../constants/symbolToRepresentative'
 import { PartDisplay } from './PartDisplay'
 

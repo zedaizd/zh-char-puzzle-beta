@@ -1,4 +1,4 @@
-import { CharStatus, getSymbolStatus } from '../../lib/statuses'
+import { getSymbolStatus } from '../../lib/statuses'
 import { getCharSymbols } from '../../lib/words'
 import { HintKey } from './HintKey'
 
