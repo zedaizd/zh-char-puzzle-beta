@@ -45,7 +45,6 @@ function App() {
 
   const [currentGuess, setCurrentGuess] = useState('')
   const [isGameWon, setIsGameWon] = useState(false)
-  const [isInfoRead, setIsInfoRead] = useState(false)
   const [isInfoModalOpen, setIsInfoModalOpen] = useState(false)
   const [isAboutModalOpen, setIsAboutModalOpen] = useState(false)
   const [isNotEnoughLetters, setIsNotEnoughLetters] = useState(false)
@@ -64,11 +63,6 @@ function App() {
   const [validSymbols, SetValidSymbols] = useState([] as number[])
   const [guesses, setGuesses] = useState<string[]>(() => {
     const loaded = loadGameStateFromLocalStorage()
-    setIsInfoRead(loaded?.isInfoRead || false)
-
-    if (!loaded?.isInfoRead || false) {
-      setIsInfoModalOpen(true)
-    }
 
     if (loaded?.solution !== solution) {
       return []
@@ -81,6 +75,15 @@ function App() {
       setIsGameLost(true)
     }
     return loaded.guesses
+  })
+  const [isInfoRead, setIsInfoRead] = useState(() => {
+    let isRead = localStorage.getItem('isInfoRead')
+    if (isRead !== 'true') {
+      setIsInfoModalOpen(true)
+      return false
+    }
+
+    return true
   })
 
   const [stats, setStats] = useState(() => loadStats())
@@ -102,13 +105,12 @@ function App() {
     saveGameStateToLocalStorage({
       guesses,
       solution,
-      isInfoRead,
     })
-  }, [guesses, isInfoRead])
+  }, [guesses])
 
   useEffect(() => {
-    if (isInfoModalOpen) setIsInfoRead(true)
-  }, [isInfoModalOpen])
+    localStorage.setItem('isInfoRead', isInfoRead.toString())
+  }, [isInfoRead])
 
   useEffect(() => {
     if (isGameWon) {
@@ -216,7 +218,10 @@ function App() {
       /> */}
       <InfoModal
         isOpen={isInfoModalOpen}
-        handleClose={() => setIsInfoModalOpen(false)}
+        handleClose={() => {
+          setIsInfoModalOpen(false)
+          setIsInfoRead(true)
+        }}
       />
       <StatsModal
         isOpen={isStatsModalOpen}
