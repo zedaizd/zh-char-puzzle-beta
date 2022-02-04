@@ -1,16 +1,28 @@
 # 字知之明
 
-這是一個拆字猜字遊戲的專案  
-Forked from [hannahcode/word-guessing-game](https://github.com/hannahcode/word-guessing-game)  
+這是一個[拆字猜字遊戲](https://zedaizd.github.io/zh-char-puzzle/)的專案  
 
-## 關於素材
+## Credits
 
-拆字資料以及部件圖片的來源是[全字庫](https://www.cns11643.gov.tw/index.jsp)的[授權下載區域](https://www.cns11643.gov.tw/pageView.jsp?ID=59)  
-拆字資料經過轉換成 YAML 後置於 `datasets/full`  
-部件圖片經過批次去背存成 PNG 置於 `public/parts`  
+### Source Code
 
-常用字表來自[教育部常用字表](https://language.moe.gov.tw/result.aspx?classify_sn=23&subclassify_sn=437&content_sn=46)  
-原檔選擇 Excel 轉換成 YAML 後置於 `datasets/frequently-used-subset`  
+- Forked from [hannahcode/word-guessing-game](https://github.com/hannahcode/word-guessing-game)  
+- Site deployment steps referring to [roedoejet/AnyLanguage-Wordle](https://github.com/roedoejet/AnyLanguage-Wordle)
+
+### 關於素材
+
+- 拆字資料以及部件圖片：[全字庫](https://www.cns11643.gov.tw/index.jsp)的[授權下載區域](https://www.cns11643.gov.tw/pageView.jsp?ID=59)  
+  - 拆字資料等置於 `datasets/full`  
+  - 部件圖片置於 `public/parts`  
+
+- 常用字表：[教育部常用字表](https://language.moe.gov.tw/result.aspx?classify_sn=23&subclassify_sn=437&content_sn=46)  
+  - `datasets/frequently-used-subset`  
+
+### 靈感來源
+- [Wordle](https://www.powerlanguage.co.uk/wordle/)
+- [注得了](https://words.hk/static/bopomofo-wordle/)
+- [國字刮刮樂](https://stimim.github.io/cht_scratchcard/)
+
 
 ## Original Readme from hannahcode/word-guessing-game
 
