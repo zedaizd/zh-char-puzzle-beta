@@ -118,16 +118,16 @@ export const getWordOfDay = () => {
   const nextday = (index + 1) * msInDay + epochMs
 
   const rng = seedrandom(index.toString() + 11)
-  const solIndex = Math.abs(rng.int32())
+  const solIndex = Math.abs(rng.int32()) % WORDS.length
 
-  const solution = WORDS[solIndex % WORDS.length].toUpperCase()
+  const solution = WORDS[solIndex].toUpperCase()
   const solutionSymbols = getCharSymbols(solution)
 
   const possibleSymbols = getPossibleSymbols(rng, solutionSymbols)
 
   return {
     solution: solution,
-    solutionIndex: solIndex,
+    seedIndex: index,
     solutionSymbols: solutionSymbols,
     possibleSymbols: possibleSymbols,
     tomorrow: nextday,
@@ -136,7 +136,7 @@ export const getWordOfDay = () => {
 
 export const {
   solution,
-  solutionIndex,
+  seedIndex,
   solutionSymbols,
   possibleSymbols,
   tomorrow,
