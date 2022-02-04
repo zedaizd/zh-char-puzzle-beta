@@ -1,5 +1,4 @@
 import { getGuessStatuses } from '../../lib/statuses'
-import { getCharSymbols } from '../../lib/words'
 import { Cell } from './Cell'
 import { SymbolDisplay } from './SymbolDisplay'
 

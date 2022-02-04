@@ -15,7 +15,7 @@ export const Grid = ({ guesses, solutionSymbols }: Props) => {
     guesses.map(g => getCharSymbols(g).filter(s => solutionSymbols.includes(s)))
 
   return (
-    <div className="flex w-80 mx-auto items-top pb-6">
+    <div className="flex w-80 h-40 mx-auto items-top justify-center pb-6">
       {guesses.map((guess, i) => (
         <CompletedRow key={i} guess={guess} validSymbols={guessedSymbols[i]} />
       ))}

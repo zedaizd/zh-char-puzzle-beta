@@ -120,7 +120,7 @@ export const getWordOfDay = () => {
   const index = Math.floor((now - epochMs) / msInDay)
   const nextday = (index + 1) * msInDay + epochMs
 
-  const rng = seedrandom(index.toString() + 6)
+  const rng = seedrandom(index.toString() + 11)
   const solIndex = Math.abs(rng.int32())
   
   const solution = WORDS[solIndex % WORDS.length].toUpperCase()

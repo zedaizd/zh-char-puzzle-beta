@@ -1,9 +1,5 @@
-import { KeyValue } from '../../lib/keyboard'
-import { getStatuses, CharStatus, getSymbolStatus } from '../../lib/statuses'
-import { Key } from './Key'
-import { useEffect } from 'react'
-import { ENTER_TEXT, DELETE_TEXT } from '../../constants/strings'
-import { getCharSymbols, solutionSymbols } from '../../lib/words'
+import { CharStatus, getSymbolStatus } from '../../lib/statuses'
+import { getCharSymbols } from '../../lib/words'
 import { HintKey } from './HintKey'
 
 type Props = {
@@ -21,31 +17,28 @@ export const HintPanel = ({ guesses, solution, possibleSymbols }: Props) => {
   )
   usedSymbols = usedSymbols.filter((v, i) => usedSymbols.indexOf(v) === i)
 
-  const validSymbols = getCharSymbols(solution)
-
   const symbolStatuses = 
-    possibleSymbols.map(s => getSymbolStatus(usedSymbols, validSymbols, s))
+    possibleSymbols.map(s => 
+      usedSymbols.includes(s)
+      ? getSymbolStatus(s)
+      : undefined)
 
   const possibleSymbolIndexGroups: number[][] = []
-  const groupSize = 6
-  const groupNums = possibleSymbols.length / groupSize
+  const groupSizes = possibleSymbols.length % 2 === 0
+    ? [ 5, 4 ]
+    : [ 6, 5 ]
   
   let index = 0
-  for (let g = 0; g < groupNums; g++) {
-    let row = [] as number[]
-    for (let i = 0 ; i < groupSize; i++) {
-      index = i + 6 * g
-
-      if (index === possibleSymbols.length)
-        break;
-
+  let groupIndex = 0
+  while (index < possibleSymbols.length) {
+    let currentGroupSize = groupSizes[groupIndex % 2]
+    let row: number[] = []
+    for (let i = 0; i < currentGroupSize && index < possibleSymbols.length; i++) {
       row.push(index)
+      index++
     }
-
+    groupIndex++
     possibleSymbolIndexGroups.push(row)
-
-    if (index === possibleSymbols.length)
-      break;
   }
 
   return (

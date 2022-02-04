@@ -47,8 +47,20 @@ export const InfoModal = ({ isOpen, handleClose }: Props) => {
         例如我猜「古」，打中中間的卡<br />
         卡片變紅色表示謎底沒有這個部件<br /><br />
 
-        謎題跟可以猜的字出自<a href="https://language.moe.gov.tw/result.aspx?classify_sn=23&subclassify_sn=437&content_sn=46">「教育部常用字表」</a><br />
-        文字拆解的規則出自<a href="https://www.cns11643.gov.tw/pageView.jsp?ID=104">「全字庫」</a><br />
+        謎題跟可以猜的字出自
+        <a
+         href="https://language.moe.gov.tw/result.aspx?classify_sn=23&subclassify_sn=437&content_sn=46"
+         className="underline font-bold"
+        >
+          「教育部常用字表」
+        </a><br />
+        文字拆解的規則出自
+        <a 
+          href="https://www.cns11643.gov.tw/pageView.jsp?ID=104"
+          className="underline font-bold"
+        >
+          「全字庫」
+        </a><br />
         順帶一提，這關的謎底是「左」
       </p>
     </BaseModal>
