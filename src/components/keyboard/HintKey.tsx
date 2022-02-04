@@ -1,0 +1,32 @@
+import { ReactNode } from 'react'
+import classnames from 'classnames'
+import { CharStatus } from '../../lib/statuses'
+import { SymbolDisplay } from '../grid/SymbolDisplay'
+
+type Props = {
+  children?: ReactNode
+  symbol: number
+  width?: number
+  status?: CharStatus
+}
+
+export const HintKey = ({ children, status, width = 40, symbol }: Props) => {
+  const classes = classnames(
+    'flex items-center justify-center rounded mx-0.5 text-xs font-bold cursor-pointer select-none dark:text-white',
+    {
+      'bg-slate-200 dark:bg-slate-600 hover:bg-slate-300 active:bg-slate-400':
+        !status,
+      'bg-red-300 text-white': status === 'absent',
+      'bg-green-200 hover:bg-green-300 active:bg-green-400 text-white':
+        status === 'correct',
+      'bg-orange-500 hover:bg-orange-600 active:bg-orange-700 dark:bg-orange-700 text-white':
+        status === 'present',
+    }
+  )
+
+  return (
+    <button style={{ width: `${width}px`, height: '58px' }} className={classes}>
+      <SymbolDisplay symbol={symbol} />
+    </button>
+  )
+}

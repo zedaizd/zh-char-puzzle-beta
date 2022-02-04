@@ -6,7 +6,7 @@ import {
 import { useState, useEffect } from 'react'
 import { Alert } from './components/alerts/Alert'
 import { Grid } from './components/grid/Grid'
-import { Keyboard } from './components/keyboard/Keyboard'
+import { InputCell } from './components/grid/InputCell'
 import { AboutModal } from './components/modals/AboutModal'
 import { InfoModal } from './components/modals/InfoModal'
 import { StatsModal } from './components/modals/StatsModal'
@@ -19,7 +19,14 @@ import {
   WORD_NOT_FOUND_MESSAGE,
   CORRECT_WORD_MESSAGE,
 } from './constants/strings'
-import { isWordInWordList, isWinningWord, solution } from './lib/words'
+import {
+  isWordInWordList,
+  isWinningWord,
+  getCharSymbols,
+  solution,
+  solutionSymbols,
+  possibleSymbols,
+} from './lib/words'
 import { addStatsForCompletedGame, loadStats } from './lib/stats'
 import {
   loadGameStateFromLocalStorage,
@@ -27,6 +34,7 @@ import {
 } from './lib/localStorage'
 
 import './App.css'
+import { HintPanel } from './components/keyboard/HintPanel'
 
 const ALERT_TIME_MS = 2000
 
@@ -51,8 +59,11 @@ function App() {
       : false
   )
   const [successAlert, setSuccessAlert] = useState('')
+  const [validSymbolGuesses, setValidSymbolGuesses] = useState([] as number[][])
+  const [validSymbols, SetValidSymbols] = useState([] as number[])
   const [guesses, setGuesses] = useState<string[]>(() => {
     const loaded = loadGameStateFromLocalStorage()
+
     if (loaded?.solution !== solution) {
       return []
     }
@@ -64,6 +75,15 @@ function App() {
       setIsGameLost(true)
     }
     return loaded.guesses
+  })
+  const [isInfoRead, setIsInfoRead] = useState(() => {
+    let isRead = localStorage.getItem('isInfoRead')
+    if (isRead !== 'true') {
+      setIsInfoModalOpen(true)
+      return false
+    }
+
+    return true
   })
 
   const [stats, setStats] = useState(() => loadStats())
@@ -82,8 +102,15 @@ function App() {
   }
 
   useEffect(() => {
-    saveGameStateToLocalStorage({ guesses, solution })
+    saveGameStateToLocalStorage({
+      guesses,
+      solution,
+    })
   }, [guesses])
+
+  useEffect(() => {
+    localStorage.setItem('isInfoRead', isInfoRead.toString())
+  }, [isInfoRead])
 
   useEffect(() => {
     if (isGameWon) {
@@ -103,20 +130,16 @@ function App() {
   }, [isGameWon, isGameLost])
 
   const onChar = (value: string) => {
-    if (currentGuess.length < 5 && guesses.length < 6 && !isGameWon) {
-      setCurrentGuess(`${currentGuess}${value}`)
+    if (guesses.length < 6 && !isGameWon) {
+      setCurrentGuess(`${value}`)
     }
-  }
-
-  const onDelete = () => {
-    setCurrentGuess(currentGuess.slice(0, -1))
   }
 
   const onEnter = () => {
     if (isGameWon || isGameLost) {
       return
     }
-    if (!(currentGuess.length === 5)) {
+    if (!(currentGuess.length === 1)) {
       setIsNotEnoughLetters(true)
       return setTimeout(() => {
         setIsNotEnoughLetters(false)
@@ -132,8 +155,20 @@ function App() {
 
     const winningWord = isWinningWord(currentGuess)
 
-    if (currentGuess.length === 5 && guesses.length < 6 && !isGameWon) {
+    if (currentGuess.length === 1 && guesses.length < 6 && !isGameWon) {
       setGuesses([...guesses, currentGuess])
+
+      let latestValidGuessedSymbols = getCharSymbols(currentGuess).filter(
+        (sym) => solutionSymbols.includes(sym)
+      )
+
+      let newlyValidSymbols = latestValidGuessedSymbols.filter(
+        (sym) => !validSymbols.includes(sym)
+      )
+
+      setValidSymbolGuesses([...validSymbolGuesses, latestValidGuessedSymbols])
+      SetValidSymbols([...validSymbols, ...newlyValidSymbols])
+
       setCurrentGuess('')
 
       if (winningWord) {
@@ -165,16 +200,28 @@ function App() {
           onClick={() => setIsStatsModalOpen(true)}
         />
       </div>
-      <Grid guesses={guesses} currentGuess={currentGuess} />
-      <Keyboard
+
+      <Grid guesses={guesses} solutionSymbols={solutionSymbols} />
+      <HintPanel
+        solution={solution}
+        guesses={guesses}
+        possibleSymbols={possibleSymbols}
+      />
+      <div>
+        <InputCell value={currentGuess} onChar={onChar} onEnter={onEnter} />
+      </div>
+      {/* <Keyboard
         onChar={onChar}
         onDelete={onDelete}
         onEnter={onEnter}
         guesses={guesses}
-      />
+      /> */}
       <InfoModal
         isOpen={isInfoModalOpen}
-        handleClose={() => setIsInfoModalOpen(false)}
+        handleClose={() => {
+          setIsInfoModalOpen(false)
+          setIsInfoRead(true)
+        }}
       />
       <StatsModal
         isOpen={isStatsModalOpen}

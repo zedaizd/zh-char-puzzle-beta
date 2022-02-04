@@ -1,22 +1,25 @@
+import { getCharSymbols } from '../../lib/words'
 import { CompletedRow } from './CompletedRow'
-import { CurrentRow } from './CurrentRow'
 import { EmptyRow } from './EmptyRow'
 
 type Props = {
   guesses: string[]
-  currentGuess: string
+  solutionSymbols: number[]
 }
 
-export const Grid = ({ guesses, currentGuess }: Props) => {
+export const Grid = ({ guesses, solutionSymbols }: Props) => {
   const empties =
-    guesses.length < 5 ? Array.from(Array(5 - guesses.length)) : []
+    guesses.length < 6 ? Array.from(Array(6 - guesses.length)) : []
+
+  const guessedSymbols: number[][] = guesses.map((g) =>
+    getCharSymbols(g).filter((s) => solutionSymbols.includes(s))
+  )
 
   return (
-    <div className="pb-6">
+    <div className="flex w-80 h-40 mx-auto items-top justify-center pb-6">
       {guesses.map((guess, i) => (
-        <CompletedRow key={i} guess={guess} />
+        <CompletedRow key={i} guess={guess} validSymbols={guessedSymbols[i]} />
       ))}
-      {guesses.length < 6 && <CurrentRow guess={currentGuess} />}
       {empties.map((_, i) => (
         <EmptyRow key={i} />
       ))}

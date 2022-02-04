@@ -1,6 +1,6 @@
-import { solution } from './words'
+import { possibleSymbols, solution, solutionSymbols } from './words'
 
-export type CharStatus = 'absent' | 'present' | 'correct'
+export type CharStatus = 'absent' | 'present' | 'correct' | 'dont_care'
 
 export type CharValue =
   | 'Q'
@@ -55,6 +55,14 @@ export const getStatuses = (
   })
 
   return charObj
+}
+
+export const getSymbolStatus = (symbolInQuestion: number): CharStatus => {
+  return possibleSymbols.includes(symbolInQuestion)
+    ? solutionSymbols.includes(symbolInQuestion)
+      ? 'correct'
+      : 'absent'
+    : 'dont_care'
 }
 
 export const getGuessStatuses = (guess: string): CharStatus[] => {

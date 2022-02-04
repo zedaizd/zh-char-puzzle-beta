@@ -1,17 +1,21 @@
 import { getGuessStatuses } from '../../lib/statuses'
 import { Cell } from './Cell'
+import { SymbolDisplay } from './SymbolDisplay'
 
 type Props = {
   guess: string
+  validSymbols: number[]
 }
 
-export const CompletedRow = ({ guess }: Props) => {
+export const CompletedRow = ({ guess, validSymbols }: Props) => {
   const statuses = getGuessStatuses(guess)
+  const symbols = validSymbols.filter((v, i) => validSymbols.indexOf(v) === i)
 
   return (
-    <div className="flex justify-center mb-1">
-      {guess.split('').map((letter, i) => (
-        <Cell key={i} value={letter} status={statuses[i]} />
+    <div className="mb-1 items-center">
+      <Cell value={guess} status={statuses[0]} />
+      {symbols.map((symbol, i) => (
+        <SymbolDisplay key={i} symbol={symbol} />
       ))}
     </div>
   )

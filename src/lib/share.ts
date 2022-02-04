@@ -1,5 +1,5 @@
-import { getGuessStatuses } from './statuses'
-import { solutionIndex } from './words'
+import { getGuessStatuses, getSymbolStatus } from './statuses'
+import { getCharSymbols, solutionIndex } from './words'
 import { GAME_TITLE } from '../constants/strings'
 
 export const shareStatus = (guesses: string[], lost: boolean) => {
@@ -10,20 +10,27 @@ export const shareStatus = (guesses: string[], lost: boolean) => {
 }
 
 export const generateEmojiGrid = (guesses: string[]) => {
+  let checkedInvalidSymbols: number[] = []
+
   return guesses
     .map((guess) => {
-      const status = getGuessStatuses(guess)
-      return guess
-        .split('')
-        .map((letter, i) => {
-          switch (status[i]) {
-            case 'correct':
-              return '🟩'
-            case 'present':
-              return '🟨'
-            default:
-              return '⬜'
-          }
+      if (getGuessStatuses(guess)[0] === 'correct') {
+        return '⭐'
+      }
+
+      const symbols = getCharSymbols(guess)
+
+      return symbols
+        .map((s) => {
+          // Intentionally reporting absent parts only.
+          // Because we don't want to leak any information about the answer
+          if (
+            !checkedInvalidSymbols.includes(s) &&
+            getSymbolStatus(s) === 'absent'
+          ) {
+            checkedInvalidSymbols.push(s)
+            return '🟥'
+          } else return '⬜'
         })
         .join('')
     })
