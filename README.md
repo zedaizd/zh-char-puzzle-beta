@@ -1,6 +1,7 @@
 # 字知之明
 
 這是一個[拆字猜字遊戲](https://zedaizd.github.io/zh-char-puzzle/)的專案  
+![image](https://user-images.githubusercontent.com/47981087/152500843-62fde6d1-8c12-4f9d-8302-113fcef040ec.png)
 
 ## Credits
 
