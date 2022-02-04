@@ -58,12 +58,11 @@ export const getStatuses = (
 }
 
 export const getSymbolStatus = (symbolInQuestion: number): CharStatus => {
-
   return possibleSymbols.includes(symbolInQuestion)
-      ? solutionSymbols.includes(symbolInQuestion)
-        ? 'correct'
-        : 'absent'
-      : 'dont_care'
+    ? solutionSymbols.includes(symbolInQuestion)
+      ? 'correct'
+      : 'absent'
+    : 'dont_care'
 }
 
 export const getGuessStatuses = (guess: string): CharStatus[] => {

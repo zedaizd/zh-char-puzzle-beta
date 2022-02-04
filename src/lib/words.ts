@@ -6,35 +6,29 @@ import seedrandom from 'seedrandom'
 
 type prng = ReturnType<typeof seedrandom>
 
-const charToSymbols: { [key: string]: number[] } =
-  WORDS.reduce<{ [key: string]: number[] }>(
-    (prev, current, index) => {
-      const symbols = SOLUTION_CHAR_TO_SYMBOLS[index]
-      prev[current] = symbols
+const charToSymbols: { [key: string]: number[] } = WORDS.reduce<{
+  [key: string]: number[]
+}>((prev, current, index) => {
+  const symbols = SOLUTION_CHAR_TO_SYMBOLS[index]
+  prev[current] = symbols
 
-      return prev
-    },
-    {}
-  )
+  return prev
+}, {})
 
 VALIDGUESSES.forEach((c, i) => {
-
   const symbols = VALIDGUESS_CHAR_TO_SYMBOLS[i]
 
   charToSymbols[c] = symbols
 })
 
 const symbolToChars = new Map<number, string[]>()
-Object.keys(charToSymbols)
-.forEach(char => {
-
+Object.keys(charToSymbols).forEach((char) => {
   let symbols = charToSymbols[char]
 
-  symbols.forEach(s => {
+  symbols.forEach((s) => {
     if (symbolToChars.has(s)) {
       symbolToChars.get(s)?.push(char)
-    }
-    else {
+    } else {
       symbolToChars.set(s, [char])
     }
   })
@@ -72,7 +66,7 @@ const randomSort = <T>(rng: prng, arr: T[]) => {
     arr[b] = tmp
   }
 
-  let ret = arr.map(v => v)
+  let ret = arr.map((v) => v)
   for (let i = 0; i < ret.length; i++) {
     swap(ret, i, getRandomRange(rng, i, ret.length - i))
   }
@@ -88,7 +82,10 @@ const getPossibleSymbols = (rng: prng, solutionSymbols: number[]) => {
   let iteration = 0
   while (ret.length < solutionSymbols.length + 8 && iteration < 100) {
     let solutionSymbolIndex = iteration % solutionSymbols.length
-    let possibleSymbols = getNeighborSymbols(rng, solutionSymbols[solutionSymbolIndex])
+    let possibleSymbols = getNeighborSymbols(
+      rng,
+      solutionSymbols[solutionSymbolIndex]
+    )
     ret = dedup(ret.concat(possibleSymbols))
 
     iteration++
@@ -122,7 +119,7 @@ export const getWordOfDay = () => {
 
   const rng = seedrandom(index.toString() + 11)
   const solIndex = Math.abs(rng.int32())
-  
+
   const solution = WORDS[solIndex % WORDS.length].toUpperCase()
   const solutionSymbols = getCharSymbols(solution)
 
@@ -137,4 +134,10 @@ export const getWordOfDay = () => {
   }
 }
 
-export const { solution, solutionIndex, solutionSymbols, possibleSymbols, tomorrow } = getWordOfDay()
+export const {
+  solution,
+  solutionIndex,
+  solutionSymbols,
+  possibleSymbols,
+  tomorrow,
+} = getWordOfDay()

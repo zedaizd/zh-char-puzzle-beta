@@ -15,15 +15,17 @@ export const AboutModal = ({ isOpen, handleClose }: Props) => {
           className="underline font-bold"
         >
           check out the code here
-        </a>{' '}<br /><br />
-
+        </a>{' '}
+        <br />
+        <br />
         這個專案是從
         <a
-          href='https://github.com/hannahcode/word-guessing-game'
-          className='underline font-fold'
+          href="https://github.com/hannahcode/word-guessing-game"
+          className="underline font-fold"
         >
-         hannahcode/word-guessing-game
-        </a> 分支出來的
+          hannahcode/word-guessing-game
+        </a>{' '}
+        分支出來的
       </p>
     </BaseModal>
   )

@@ -10,12 +10,7 @@ type Props = {
   status?: CharStatus
 }
 
-export const HintKey = ({
-  children,
-  status,
-  width = 40,
-  symbol,
-}: Props) => {
+export const HintKey = ({ children, status, width = 40, symbol }: Props) => {
   const classes = classnames(
     'flex items-center justify-center rounded mx-0.5 text-xs font-bold cursor-pointer select-none dark:text-white',
     {
@@ -30,11 +25,8 @@ export const HintKey = ({
   )
 
   return (
-    <button
-      style={{ width: `${width}px`, height: '58px' }}
-      className={classes}
-    >
-      <SymbolDisplay symbol={symbol}/>
+    <button style={{ width: `${width}px`, height: '58px' }} className={classes}>
+      <SymbolDisplay symbol={symbol} />
     </button>
   )
 }

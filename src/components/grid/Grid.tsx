@@ -11,8 +11,9 @@ export const Grid = ({ guesses, solutionSymbols }: Props) => {
   const empties =
     guesses.length < 6 ? Array.from(Array(6 - guesses.length)) : []
 
-  const guessedSymbols: number[][] =
-    guesses.map(g => getCharSymbols(g).filter(s => solutionSymbols.includes(s)))
+  const guessedSymbols: number[][] = guesses.map((g) =>
+    getCharSymbols(g).filter((s) => solutionSymbols.includes(s))
+  )
 
   return (
     <div className="flex w-80 h-40 mx-auto items-top justify-center pb-6">

@@ -3,7 +3,7 @@ import { Cell } from './Cell'
 import { SymbolDisplay } from './SymbolDisplay'
 
 type Props = {
-  guess: string,
+  guess: string
   validSymbols: number[]
 }
 

@@ -1,9 +1,9 @@
 const gameStateKey = 'gameState'
 
 type StoredGameState = {
-  guesses: string[],
-  solution: string,
-  isInfoRead: boolean,
+  guesses: string[]
+  solution: string
+  isInfoRead: boolean
 }
 
 export const saveGameStateToLocalStorage = (gameState: StoredGameState) => {

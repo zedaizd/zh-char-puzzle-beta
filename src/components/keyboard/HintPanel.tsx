@@ -9,31 +9,28 @@ type Props = {
 }
 
 export const HintPanel = ({ guesses, solution, possibleSymbols }: Props) => {
-  let usedSymbols = guesses.reduce<number[]>(
-    (prev, current) => {
-      return prev.concat(getCharSymbols(current))
-    },
-    []
-  )
+  let usedSymbols = guesses.reduce<number[]>((prev, current) => {
+    return prev.concat(getCharSymbols(current))
+  }, [])
   usedSymbols = usedSymbols.filter((v, i) => usedSymbols.indexOf(v) === i)
 
-  const symbolStatuses = 
-    possibleSymbols.map(s => 
-      usedSymbols.includes(s)
-      ? getSymbolStatus(s)
-      : undefined)
+  const symbolStatuses = possibleSymbols.map((s) =>
+    usedSymbols.includes(s) ? getSymbolStatus(s) : undefined
+  )
 
   const possibleSymbolIndexGroups: number[][] = []
-  const groupSizes = possibleSymbols.length % 2 === 0
-    ? [ 5, 4 ]
-    : [ 6, 5 ]
-  
+  const groupSizes = possibleSymbols.length % 2 === 0 ? [5, 4] : [6, 5]
+
   let index = 0
   let groupIndex = 0
   while (index < possibleSymbols.length) {
     let currentGroupSize = groupSizes[groupIndex % 2]
     let row: number[] = []
-    for (let i = 0; i < currentGroupSize && index < possibleSymbols.length; i++) {
+    for (
+      let i = 0;
+      i < currentGroupSize && index < possibleSymbols.length;
+      i++
+    ) {
       row.push(index)
       index++
     }
@@ -43,10 +40,17 @@ export const HintPanel = ({ guesses, solution, possibleSymbols }: Props) => {
 
   return (
     <div>
-      {possibleSymbolIndexGroups.map((v, i) => 
-      <div key={i} className="flex justify-center mb-1">
-        {v.map(index => <HintKey key={index} symbol={possibleSymbols[index]} status={symbolStatuses[index]}/>)}
-      </div>)}
+      {possibleSymbolIndexGroups.map((v, i) => (
+        <div key={i} className="flex justify-center mb-1">
+          {v.map((index) => (
+            <HintKey
+              key={index}
+              symbol={possibleSymbols[index]}
+              status={symbolStatuses[index]}
+            />
+          ))}
+        </div>
+      ))}
     </div>
   )
 }

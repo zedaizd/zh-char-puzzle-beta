@@ -19,17 +19,18 @@ export const generateEmojiGrid = (guesses: string[]) => {
       }
 
       const symbols = getCharSymbols(guess)
-      
+
       return symbols
-        .map(s => {
+        .map((s) => {
           // Intentionally reporting absent parts only.
           // Because we don't want to leak any information about the answer
-          if (!checkedInvalidSymbols.includes(s) && getSymbolStatus(s) === 'absent') {
+          if (
+            !checkedInvalidSymbols.includes(s) &&
+            getSymbolStatus(s) === 'absent'
+          ) {
             checkedInvalidSymbols.push(s)
             return '🟥'
-          }
-          else
-            return '⬜'
+          } else return '⬜'
         })
         .join('')
     })
