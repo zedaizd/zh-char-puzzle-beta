@@ -19,7 +19,7 @@ export const HintPanel = ({ guesses, solution, possibleSymbols }: Props) => {
   )
 
   const possibleSymbolIndexGroups: number[][] = []
-  const groupSizes = possibleSymbols.length % 2 === 0 ? [5, 4] : [6, 5]
+  const groupSizes = possibleSymbols.length % 2 === 0 ? [7, 6] : [8, 7]
 
   let index = 0
   let groupIndex = 0

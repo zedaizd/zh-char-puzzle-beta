@@ -34,6 +34,8 @@ Object.keys(charToSymbols).forEach((char) => {
   })
 })
 
+const allSymbols = Array.from(symbolToChars.keys())
+
 const getRandomRange = (rng: prng, start: number, range: number) => {
   return Math.abs(rng.int32() % range) + start
 }
@@ -80,7 +82,7 @@ const getPossibleSymbols = (rng: prng, solutionSymbols: number[]) => {
   ret = ret.concat(solutionSymbols)
 
   let iteration = 0
-  while (ret.length < solutionSymbols.length + 8 && iteration < 100) {
+  while (ret.length < 13 && iteration < 100) {
     let solutionSymbolIndex = iteration % solutionSymbols.length
     let possibleSymbols = getNeighborSymbols(
       rng,
@@ -89,6 +91,11 @@ const getPossibleSymbols = (rng: prng, solutionSymbols: number[]) => {
     ret = dedup(ret.concat(possibleSymbols))
 
     iteration++
+  }
+
+  while (ret.length < 23) {
+    ret.push(getRandomElement(rng, allSymbols))
+    ret = dedup(ret)
   }
 
   return randomSort(rng, ret)
