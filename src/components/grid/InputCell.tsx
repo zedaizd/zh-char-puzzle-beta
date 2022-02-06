@@ -17,7 +17,7 @@ export const InputCell = ({ onChar, onEnter, value }: Props) => {
   }
 
   const classes = classnames(
-    'w-14 h-14 border-solid border-2 flex items-center justify-center mx-0.5 text-lg font-bold rounded dark:text-white',
+    'w-14 h-14 border-solid border-2 flex items-center justify-center mx-0.5 text-lg font-bold rounded dark:text-white bg-white dark:bg-slate-900 border-slate-200 dark:border-slate-600',
     {
       'border-black dark:border-slate-100': value,
       'cell-animation': !!value,
