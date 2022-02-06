@@ -1,6 +1,6 @@
-import { createContext } from "react";
+import { createContext } from 'react'
 
 export const AppContext = createContext({
   isDarkMode: false,
-  setIsDarkMode: (isDarkMode: boolean) => {}
-});
+  setIsDarkMode: (isDarkMode: boolean) => {},
+})
