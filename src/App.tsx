@@ -3,7 +3,7 @@ import {
   ChartBarIcon,
   SunIcon,
 } from '@heroicons/react/outline'
-import { useState, useEffect, createContext } from 'react'
+import { useState, useEffect } from 'react'
 import { Alert } from './components/alerts/Alert'
 import { Grid } from './components/grid/Grid'
 import { InputCell } from './components/grid/InputCell'
