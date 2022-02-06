@@ -1,4 +1,4 @@
-export const GAME_TITLE = '字知之明'
+export const GAME_TITLE = '字知之明(測試版)'
 
 export const WIN_MESSAGES = ['Good Job!', 'Awesome', 'Well done!']
 export const GAME_COPIED_MESSAGE = '已複製到剪貼簿'
