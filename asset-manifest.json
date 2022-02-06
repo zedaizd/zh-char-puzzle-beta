@@ -1,15 +1,15 @@
 {
   "files": {
     "main.css": "/zh-char-puzzle-beta/static/css/main.0f518ce5.css",
-    "main.js": "/zh-char-puzzle-beta/static/js/main.637ca0e3.js",
+    "main.js": "/zh-char-puzzle-beta/static/js/main.66a16ada.js",
     "static/js/787.3500bfec.chunk.js": "/zh-char-puzzle-beta/static/js/787.3500bfec.chunk.js",
     "index.html": "/zh-char-puzzle-beta/index.html",
     "main.0f518ce5.css.map": "/zh-char-puzzle-beta/static/css/main.0f518ce5.css.map",
-    "main.637ca0e3.js.map": "/zh-char-puzzle-beta/static/js/main.637ca0e3.js.map",
+    "main.66a16ada.js.map": "/zh-char-puzzle-beta/static/js/main.66a16ada.js.map",
     "787.3500bfec.chunk.js.map": "/zh-char-puzzle-beta/static/js/787.3500bfec.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.0f518ce5.css",
-    "static/js/main.637ca0e3.js"
+    "static/js/main.66a16ada.js"
   ]
 }
