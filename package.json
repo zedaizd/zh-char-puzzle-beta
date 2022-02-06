@@ -1,7 +1,7 @@
 {
   "name": "wordle",
   "version": "0.1.0",
-  "homepage": "https://zedaizd.github.io/zh-char-puzzle",
+  "homepage": "https://zedaizd.github.io/zh-char-puzzle-beta",
   "private": true,
   "dependencies": {
     "@headlessui/react": "^1.4.2",
