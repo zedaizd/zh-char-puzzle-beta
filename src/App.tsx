@@ -87,6 +87,14 @@ function App() {
 
     return true
   })
+  const [isFrequentRefresh, setIsFrequentRefresh] = useState(() => {
+    let ret = localStorage.getItem('isFrequentRefresh')
+    if (ret !== 'true') {
+      return false
+    }
+
+    return true
+  })
 
   const [stats, setStats] = useState(() => loadStats())
 
@@ -113,6 +121,10 @@ function App() {
   useEffect(() => {
     localStorage.setItem('isInfoRead', isInfoRead.toString())
   }, [isInfoRead])
+
+  useEffect(() => {
+    localStorage.setItem('isFrequentRefresh', isFrequentRefresh.toString())
+  }, [isFrequentRefresh])
 
   useEffect(() => {
     if (isGameWon) {
@@ -252,6 +264,17 @@ function App() {
         >
           {ABOUT_GAME_MESSAGE}
         </button>
+
+        <p className="max-w-7xl mx-auto sm:px-6 lg:px-8 flex justify-center items-center">
+          <input
+            className="justify-center"
+            type="checkbox"
+            id="cbox1"
+            onChange={() => setIsFrequentRefresh(!isFrequentRefresh)}
+            checked={isFrequentRefresh}
+          />
+          <label htmlFor="cbox1">每次重新整理就刷新題目</label>
+        </p>
 
         <Alert
           message={NOT_ENOUGH_LETTERS_MESSAGE}
