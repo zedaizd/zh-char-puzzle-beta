@@ -40,6 +40,8 @@ import { AppContext } from './contexts/AppContext'
 const ALERT_TIME_MS = 2000
 
 function App() {
+  const isEnableFastTesting = false
+
   const prefersDarkMode = window.matchMedia(
     '(prefers-color-scheme: dark)'
   ).matches
@@ -88,6 +90,11 @@ function App() {
     return true
   })
   const [isFrequentRefresh, setIsFrequentRefresh] = useState(() => {
+    if (!isEnableFastTesting) {
+      localStorage.setItem('isFrequentRefresh', 'false')
+      return false
+    }
+
     let ret = localStorage.getItem('isFrequentRefresh')
     if (ret !== 'true') {
       return false
@@ -123,6 +130,8 @@ function App() {
   }, [isInfoRead])
 
   useEffect(() => {
+    if (!isEnableFastTesting) return
+
     localStorage.setItem('isFrequentRefresh', isFrequentRefresh.toString())
   }, [isFrequentRefresh])
 
@@ -265,16 +274,20 @@ function App() {
           {ABOUT_GAME_MESSAGE}
         </button>
 
-        <p className="max-w-7xl mx-auto sm:px-6 lg:px-8 flex justify-center items-center">
-          <input
-            className="justify-center"
-            type="checkbox"
-            id="cbox1"
-            onChange={() => setIsFrequentRefresh(!isFrequentRefresh)}
-            checked={isFrequentRefresh}
-          />
-          <label htmlFor="cbox1">每次重新整理就刷新題目</label>
-        </p>
+        {isEnableFastTesting ? (
+          <p className="max-w-7xl mx-auto sm:px-6 lg:px-8 flex justify-center items-center">
+            <input
+              className="justify-center"
+              type="checkbox"
+              id="cbox1"
+              onChange={() => setIsFrequentRefresh(!isFrequentRefresh)}
+              checked={isFrequentRefresh}
+            />
+            <label htmlFor="cbox1">每次重新整理就刷新題目</label>
+          </p>
+        ) : (
+          <></>
+        )}
 
         <Alert
           message={NOT_ENOUGH_LETTERS_MESSAGE}
