@@ -133,7 +133,7 @@ function App() {
     if (!isEnableFastTesting) return
 
     localStorage.setItem('isFrequentRefresh', isFrequentRefresh.toString())
-  }, [isFrequentRefresh])
+  }, [isFrequentRefresh, isEnableFastTesting])
 
   useEffect(() => {
     if (isGameWon) {
