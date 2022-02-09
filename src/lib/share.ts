@@ -10,8 +10,6 @@ export const shareStatus = (guesses: string[], lost: boolean) => {
 }
 
 export const generateEmojiGrid = (guesses: string[]) => {
-  let checkedInvalidSymbols: number[] = []
-
   return guesses
     .map((guess) => {
       if (getGuessStatuses(guess)[0] === 'correct') {
@@ -24,13 +22,11 @@ export const generateEmojiGrid = (guesses: string[]) => {
         .map((s) => {
           // Intentionally reporting absent parts only.
           // Because we don't want to leak any information about the answer
-          if (
-            !checkedInvalidSymbols.includes(s) &&
-            getSymbolStatus(s) === 'absent'
-          ) {
-            checkedInvalidSymbols.push(s)
+          if (getSymbolStatus(s) === 'absent') {
             return '🟥'
-          } else return '⬜'
+          } else {
+            return '⬜'
+          }
         })
         .join('')
     })
