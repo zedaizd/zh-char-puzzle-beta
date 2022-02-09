@@ -227,7 +227,7 @@ function App() {
           />
         </div>
 
-        <Grid guesses={guesses} solutionSymbols={solutionSymbols} />
+        <Grid guesses={guesses} />
         <HintPanel
           solution={solution}
           guesses={guesses}

@@ -1,22 +1,43 @@
-import { getGuessStatuses } from '../../lib/statuses'
+import { getGuessStatuses, getSymbolStatus } from '../../lib/statuses'
 import { Cell } from './Cell'
 import { SymbolDisplay } from './SymbolDisplay'
 
 type Props = {
   guess: string
-  validSymbols: number[]
+  symbols: number[]
 }
 
-export const CompletedRow = ({ guess, validSymbols }: Props) => {
+export const CompletedRow = ({ guess, symbols }: Props) => {
   const statuses = getGuessStatuses(guess)
-  const symbols = validSymbols.filter((v, i) => validSymbols.indexOf(v) === i)
+  const getSymbolDisplayClassName = (symbol: number) => {
+    let ret = 'p-0.5 m-0.5 w-2/5 border-2 border-solid rounded'
+    switch (getSymbolStatus(symbol)) {
+      case 'absent':
+        ret += ' border-red-400'
+        break
+
+      case 'correct':
+        ret += ' border-green-400'
+        break
+
+      default:
+        ret += ' border-slate-500'
+        break
+    }
+
+    return ret
+  }
 
   return (
-    <div className="mb-1 items-center">
+    <div className="mb-6 items-center">
       <Cell value={guess} status={statuses[0]} />
-      {symbols.map((symbol, i) => (
-        <SymbolDisplay key={i} symbol={symbol} />
-      ))}
+      <div className="flex h-40 items-center flex-wrap flex-col">
+        {symbols.map((symbol, i) => (
+          <div className={getSymbolDisplayClassName(symbol)}>
+            <SymbolDisplay key={i} symbol={symbol} />
+          </div>
+        ))}
+      </div>
     </div>
   )
 }
