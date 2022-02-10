@@ -11,7 +11,7 @@ export const Grid = ({ guesses }: Props) => {
     guesses.length < 6 ? Array.from(Array(6 - guesses.length)) : []
 
   return (
-    <div className="flex w-80 h-fit mx-auto items-top justify-center pb-6">
+    <div className="flex w-80 h-60 mx-auto items-top justify-center pb-6">
       {guesses.map((guess, i) => (
         <CompletedRow key={i} guess={guess} symbols={getCharSymbols(guess)} />
       ))}
