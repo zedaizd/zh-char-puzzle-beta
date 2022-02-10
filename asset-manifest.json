@@ -1,15 +1,15 @@
 {
   "files": {
-    "main.css": "/zh-char-puzzle-beta/static/css/main.0f518ce5.css",
-    "main.js": "/zh-char-puzzle-beta/static/js/main.06bfd34f.js",
+    "main.css": "/zh-char-puzzle-beta/static/css/main.83d06b8c.css",
+    "main.js": "/zh-char-puzzle-beta/static/js/main.971c06d3.js",
     "static/js/787.3500bfec.chunk.js": "/zh-char-puzzle-beta/static/js/787.3500bfec.chunk.js",
     "index.html": "/zh-char-puzzle-beta/index.html",
-    "main.0f518ce5.css.map": "/zh-char-puzzle-beta/static/css/main.0f518ce5.css.map",
-    "main.06bfd34f.js.map": "/zh-char-puzzle-beta/static/js/main.06bfd34f.js.map",
+    "main.83d06b8c.css.map": "/zh-char-puzzle-beta/static/css/main.83d06b8c.css.map",
+    "main.971c06d3.js.map": "/zh-char-puzzle-beta/static/js/main.971c06d3.js.map",
     "787.3500bfec.chunk.js.map": "/zh-char-puzzle-beta/static/js/787.3500bfec.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.0f518ce5.css",
-    "static/js/main.06bfd34f.js"
+    "static/css/main.83d06b8c.css",
+    "static/js/main.971c06d3.js"
   ]
 }
