@@ -6,6 +6,10 @@ import seedrandom from 'seedrandom'
 
 type prng = ReturnType<typeof seedrandom>
 
+const dedup = <T>(arr: T[]) => {
+  return arr.filter((v, i) => arr.indexOf(v) === i)
+}
+
 const charToSymbols: { [key: string]: number[] } = WORDS.reduce<{
   [key: string]: number[]
 }>((prev, current, index) => {
@@ -14,6 +18,8 @@ const charToSymbols: { [key: string]: number[] } = WORDS.reduce<{
 
   return prev
 }, {})
+
+const allSolutionChars = Array.from(Object.keys(charToSymbols))
 
 VALIDGUESSES.forEach((c, i) => {
   const symbols = VALIDGUESS_CHAR_TO_SYMBOLS[i]
@@ -25,7 +31,7 @@ const symbolToChars = new Map<number, string[]>()
 Object.keys(charToSymbols).forEach((char) => {
   let symbols = charToSymbols[char]
 
-  symbols.forEach((s) => {
+  dedup(symbols).forEach((s) => {
     if (symbolToChars.has(s)) {
       symbolToChars.get(s)?.push(char)
     } else {
@@ -33,6 +39,7 @@ Object.keys(charToSymbols).forEach((char) => {
     }
   })
 })
+
 
 const getRandomRange = (rng: prng, start: number, range: number) => {
   return Math.abs(rng.int32() % range) + start
@@ -44,19 +51,6 @@ const getRandomIndex = <T>(rng: prng, arr: T[]) => {
 
 const getRandomElement = <T>(rng: prng, arr: T[]) => {
   return arr[getRandomIndex(rng, arr)]
-}
-
-const getNeighborSymbols = (rng: prng, symbol: number) => {
-  let neighborChars = symbolToChars.get(symbol)
-  if (neighborChars === undefined) {
-    return [] as number[]
-  }
-
-  return charToSymbols[getRandomElement(rng, neighborChars)]
-}
-
-const dedup = <T>(arr: T[]) => {
-  return arr.filter((v, i) => arr.indexOf(v) === i)
 }
 
 const randomSort = <T>(rng: prng, arr: T[]) => {
@@ -74,21 +68,125 @@ const randomSort = <T>(rng: prng, arr: T[]) => {
   return ret
 }
 
-const getPossibleSymbols = (rng: prng, solutionSymbols: number[]) => {
+/**
+ * Generates a string[][] from a list of symbols
+ * It is a group of characters that share different level of affinity with the input symbols
+ * The affinity between two set of symbols is defined as the number of shared symbols two set of symbols
+ * The affinity between a char to a set of symbols is determined by the set of symbols used by the char
+ * 
+ * The first index indicates how many symbols are in-common
+ * Pleast note that the first element is always an empty string[] because we don't want to include characters with zero affinity
+ */
+const getCharsWithVariousAffinitiy = (symbols: number[]) => {
+  let charToSymbolCounter : { [key: string]: number } = {}
+  symbols.forEach(symbol => {
+    symbolToChars.get(symbol)?.forEach(char => {
+      if (char in charToSymbolCounter) {
+        charToSymbolCounter[char] += 1
+      }
+      else {
+        charToSymbolCounter[char] = 1
+      }
+    })
+  })
+
+  
+  return Object.keys(charToSymbolCounter)
+  .reduce<string[][]>(
+      (prev, char) => {
+      let affinity = charToSymbolCounter[char]
+      console.assert(affinity > 0)
+      prev[affinity].push(char)
+      return prev
+    },
+    Array(symbols.length + 1).fill(0).map((_) => []) // Because JS array is zero-based. We can only access arr[N] if its length is N + 1
+  )
+}
+
+const getSymbolsFromSimilarChar = (rng: prng, charsWithVariousAffinitiy: string[][], solutionSymbolCounts: number) => {
+  let minBar = Math.floor(solutionSymbolCounts / 2)
+  
+  for (let affinity = minBar; affinity <= solutionSymbolCounts; affinity++) {
+    let chars = charsWithVariousAffinitiy[affinity]
+    if (chars.length !== 0) {
+      return charToSymbols[getRandomElement(rng, chars)]
+    }
+  }
+
+  return []
+}
+
+const getCandidateSymbols = (rng: prng, solutionSymbols: number[]) => {
   let ret: number[] = []
 
   ret = ret.concat(solutionSymbols)
 
-  let iteration = 0
-  while (ret.length < solutionSymbols.length + 8 && iteration < 100) {
-    let solutionSymbolIndex = iteration % solutionSymbols.length
-    let possibleSymbols = getNeighborSymbols(
-      rng,
-      solutionSymbols[solutionSymbolIndex]
+  let charsWithVariousAffinitiy = getCharsWithVariousAffinitiy(solutionSymbols)
+  let isComplexSolution = solutionSymbols.length >= 5
+
+  if (isComplexSolution) {
+    ret = ret.concat(
+      getSymbolsFromSimilarChar(
+        rng, 
+        charsWithVariousAffinitiy, 
+        solutionSymbols.length
+      )
     )
-    ret = dedup(ret.concat(possibleSymbols))
+  }
+
+  let charsWithMinAffinity = new Set(charsWithVariousAffinitiy[1])
+  let symbolIndex = getRandomIndex(rng, solutionSymbols)
+
+  for (let addedCharCount = 0, searchedSymbolCount = 0;
+       addedCharCount < 4 && searchedSymbolCount < solutionSymbols.length;
+       searchedSymbolCount++) {
+
+    let sourceChars = symbolToChars.get(solutionSymbols[symbolIndex]) || []
+
+    let validChar = ''
+    let iteration = 0
+    while (validChar === '' && iteration < 100) {
+      let char = getRandomElement(rng, sourceChars)
+      if (charsWithMinAffinity.has(char)) {
+        validChar = char
+      }
+      iteration++
+    }
+
+    if (validChar !== '') {
+      ret = ret.concat(charToSymbols[validChar])
+      addedCharCount++
+    }
+
+    symbolIndex = (symbolIndex + 1) % solutionSymbols.length
+  }
+
+  ret = dedup(ret)
+
+  let charsWithAnyAffinity = charsWithVariousAffinitiy.reduce((prev, chars) => {
+
+    chars.forEach(char => {
+      prev.add(char)
+    })
+
+    return prev
+  },
+  new Set<string>())
+
+  let iteration = 0
+  while (ret.length < 23 && iteration < 100) {
+
+    let char = getRandomElement(rng, allSolutionChars)
+    if (!charsWithAnyAffinity.has(char)) {
+      ret = ret.concat(charToSymbols[char])
+      ret = dedup(ret)
+    }
 
     iteration++
+  }
+
+  if (ret.length > 23) {
+    ret = ret.slice(0, 23)
   }
 
   return randomSort(rng, ret)
@@ -130,7 +228,7 @@ export const getWordOfDay = () => {
   const solution = WORDS[solIndex].toUpperCase()
   const solutionSymbols = getCharSymbols(solution)
 
-  const possibleSymbols = getPossibleSymbols(rng, solutionSymbols)
+  const possibleSymbols = getCandidateSymbols(rng, solutionSymbols)
 
   return {
     solution: solution,

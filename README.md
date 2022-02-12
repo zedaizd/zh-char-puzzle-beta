@@ -1,13 +1,14 @@
 # 字知之明
 
 這是一個[拆字猜字遊戲](https://zedaizd.github.io/zh-char-puzzle/)的專案  
-![image](https://user-images.githubusercontent.com/47981087/152500843-62fde6d1-8c12-4f9d-8302-113fcef040ec.png)
+![圖片](https://user-images.githubusercontent.com/47981087/153716708-cab8d32e-8481-4b3c-be98-d4382266c436.png)
+
 
 ## Credits
 
 ### Source Code
 
-- Forked from [hannahcode/word-guessing-game](https://github.com/hannahcode/word-guessing-game)  
+- Forked from [ cwackerfuss/react-wordle](https://github.com/cwackerfuss/react-wordle)  
 - Site deployment steps referring to [roedoejet/AnyLanguage-Wordle](https://github.com/roedoejet/AnyLanguage-Wordle)
 
 ### 關於素材
@@ -24,6 +25,10 @@
 - [注得了](https://words.hk/static/bopomofo-wordle/)
 - [國字刮刮樂](https://stimim.github.io/cht_scratchcard/)
 
+
+### 更多 Wordle More Like This
+- [Wordles of the world](https://rwmpelstilzchen.gitlab.io/wordles/): 集合了世界各國的 wordle 版本
+- [Other forks](https://github.com/cwackerfuss/react-wordle#projects-built-using-this-repo)
 
 ## Original Readme from hannahcode/word-guessing-game
 
